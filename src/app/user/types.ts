@@ -8,7 +8,10 @@ type User {
     email: String!
     profileImageURL: String
     password: String 
+    posts: [Post]
     
 }
  
 ` 
+
+

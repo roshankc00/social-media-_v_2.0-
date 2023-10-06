@@ -7,6 +7,9 @@ import { User } from "./user";
 import cors from "cors";
 import { GraphqlContext } from "../types";
 import JwtService from "../services/jwt";
+import { Post } from "./post";
+import { muatations } from './post/muatation';
+
 
 
 
@@ -19,9 +22,14 @@ export async function Bootstrap() {
     typeDefs: `
 
     ${User.types}
+    ${Post.types}
 
     type Query {
       ${User.queries}
+      ${Post.queries}
+    }
+    type Mutation {
+      ${Post.muatations}
     }
  
    
@@ -30,7 +38,12 @@ export async function Bootstrap() {
     resolvers: {
       Query: {
         ...User.resolvers.queries,
+        ...Post.resolvers.queries
       },
+      Mutation: {
+        ...Post.resolvers.mutations,
+      },
+      ...Post.resolvers.extraResolver, ...User.resolvers.extraResolver
     },
   });
 
